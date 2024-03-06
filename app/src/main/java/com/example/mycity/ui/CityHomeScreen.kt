@@ -1,7 +1,7 @@
 package com.example.mycity.ui
 
+import android.location.Address
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,12 +24,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mycity.R
 import com.example.mycity.model.Category
+import com.example.mycity.model.Location
 import com.example.mycity.ui.theme.MyCityTheme
+import java.util.Locale
 
 @Composable
-fun CategoryCard(
+fun ItemCard(
     @DrawableRes image: Int,
-    @StringRes category: Int,
+    text: String,
     modifier: Modifier = Modifier
 ) {
     Card (modifier = modifier){
@@ -47,7 +49,7 @@ fun CategoryCard(
                     .weight(1f)
             )
             Text(
-                text = stringResource(id = category),
+                text = text,
                 textAlign = TextAlign.Center,
                 style = typography.titleLarge,
                 modifier = Modifier
@@ -62,9 +64,24 @@ fun CategoryCard(
 fun CategoryList(categoryList: List<Category>) {
     LazyColumn {
         itemsIndexed(categoryList) {index, item ->
-            CategoryCard(
+            ItemCard(
                 item.image,
-                item.name,
+                stringResource(id = item.name),
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .height(96.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun RecommendationList(recommendationList: List<Location>) {
+    LazyColumn {
+        itemsIndexed(recommendationList) {index, item ->
+            ItemCard(
+                item.image,
+                stringResource(id = item.name),
                 modifier = Modifier
                     .padding(horizontal = 8.dp, vertical = 4.dp)
                     .height(96.dp)
@@ -90,6 +107,29 @@ fun CategoryCardPreview() {
     MyCityTheme {
         Surface {
             CategoryList(categoryList)
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RecommendationPreview() {
+    val recommendationList = listOf(
+        Location(
+            name = R.string.location_coffee_cravings,
+            category = Category(
+                R.drawable.roasted_coffee_beans,
+                R.string.category_coffee
+            ),
+            description = R.string.location_coffee_cravings_description,
+            address = Address(Locale("CA")),
+            R.drawable.pxl_20230526_172717068
+        )
+    )
+
+    MyCityTheme {
+        Surface {
+            RecommendationList(recommendationList)
         }
     }
 }

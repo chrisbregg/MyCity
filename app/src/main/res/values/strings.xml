@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MyCity</string>
     <string name="category_coffee">Coffee Shop</string>
-    <string name="place_coffee_cravings">Cravings Coffee</string>
+    <string name="location_coffee_cravings">Cravings Coffee</string>
     <string name="category_restaurant">Restaurant</string>
+    <string name="location_coffee_cravings_description">A small local coffee shop</string>
 </resources>
