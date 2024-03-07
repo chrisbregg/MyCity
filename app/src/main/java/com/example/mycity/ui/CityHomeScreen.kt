@@ -3,6 +3,7 @@ package com.example.mycity.ui
 import android.location.Address
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,6 +28,12 @@ import com.example.mycity.model.Category
 import com.example.mycity.model.Location
 import com.example.mycity.ui.theme.MyCityTheme
 import java.util.Locale
+
+enum class CityHomeScreen() {
+    Start,
+    Category,
+    Detail
+}
 
 @Composable
 fun ItemCard(
@@ -90,6 +97,81 @@ fun RecommendationList(recommendationList: List<Location>) {
     }
 }
 
+@Composable
+fun DetailView(
+    location: Location,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+    ) {
+        Column(
+        ) {
+            Text(
+                text = stringResource(location.name),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+            Image(
+                painter = painterResource(id = location.image),
+                contentDescription = null,
+                alignment = Alignment.CenterStart,
+                contentScale = ContentScale.Fit
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            ) {
+                Text(
+                    text = "Category:"
+                )
+                Text(
+                    text = stringResource(id = location.category.name)
+                )
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            ) {
+                Text(
+                    text = "Description:"
+                )
+                Text(
+                    text = stringResource(id = location.description)
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            ) {
+                Text(
+                    text = "Category:"
+                )
+                Text(
+                    text = stringResource(id = location.category.name)
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            ) {
+                Text(
+                    text = "Location:"
+                )
+                Text(
+                    text = "Filler Text"
+                )
+            }
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun CategoryCardPreview() {
@@ -130,6 +212,32 @@ fun RecommendationPreview() {
     MyCityTheme {
         Surface {
             RecommendationList(recommendationList)
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DetailPreview() {
+    val recommendationList = listOf(
+        Location(
+            name = R.string.location_coffee_cravings,
+            category = Category(
+                R.drawable.roasted_coffee_beans,
+                R.string.category_coffee
+            ),
+            description = R.string.location_coffee_cravings_description,
+            address = Address(Locale("CA")),
+            R.drawable.pxl_20230526_172717068
+        )
+    )
+
+    MyCityTheme {
+        Surface {
+            DetailView(recommendationList[0],
+                Modifier
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                )
         }
     }
 }
